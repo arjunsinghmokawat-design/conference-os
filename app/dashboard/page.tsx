@@ -1,7 +1,9 @@
 import Sidebar from "@/components/dashboard/Sidebar";
 import Topbar from "@/components/dashboard/Topbar";
 import StatsCard from "@/components/dashboard/StatsCard";
+import Analytics from "@/components/dashboard/Analytics";
 import RecentActivity from "@/components/dashboard/RecentActivity";
+import ConferenceTable from "@/components/dashboard/ConferenceTable";
 
 import {
   CalendarDays,
@@ -14,16 +16,12 @@ export default function DashboardPage() {
   return (
     <main className="flex min-h-screen bg-slate-950 text-white">
 
-      {/* Sidebar */}
       <Sidebar />
 
-      {/* Main Content */}
       <section className="flex-1 p-8">
 
-        {/* Topbar */}
         <Topbar />
 
-        {/* Welcome */}
         <div className="mt-8">
           <h1 className="text-4xl font-bold">
             Welcome Back, Arjun 👋
@@ -34,7 +32,6 @@ export default function DashboardPage() {
           </p>
         </div>
 
-        {/* Stats Cards */}
         <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
 
           <StatsCard
@@ -67,10 +64,17 @@ export default function DashboardPage() {
 
         </div>
 
-        {/* Recent Activity */}
-        <div className="mt-10">
+        <div className="mt-10 grid gap-6 xl:grid-cols-3">
+
+          <div className="xl:col-span-2">
+            <Analytics />
+          </div>
+
           <RecentActivity />
+
         </div>
+
+        <ConferenceTable />
 
       </section>
 
