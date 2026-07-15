@@ -1,32 +1,131 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
 
-import { Mail, Lock, Eye } from "lucide-react";
+import {
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+} from "lucide-react";
 
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
 export default function LoginPage() {
+
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+
+  const [password, setPassword] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+
+  const [error, setError] = useState("");
+
+  async function handleLogin(
+    e: React.FormEvent
+  ) {
+
+    e.preventDefault();
+
+    setError("");
+
+    if (!email || !password) {
+
+      setError("Please fill all fields.");
+
+      return;
+
+    }
+
+    try {
+
+      setLoading(true);
+
+      const res = await fetch(
+        "/api/auth/login",
+        {
+
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+
+          body: JSON.stringify({
+
+            email,
+
+            password,
+
+          }),
+
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+
+        setError(data.message);
+
+        return;
+
+      }
+
+      router.push("/dashboard");
+
+    } catch (err) {
+
+      console.error(err);
+
+      setError(
+        "Something went wrong."
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  }
+
   return (
+
     <main className="flex min-h-screen items-center justify-center bg-slate-950 px-6">
 
       <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-8 shadow-2xl">
 
-        {/* Heading */}
-
         <h1 className="text-4xl font-bold text-white">
+
           Welcome Back 👋
+
         </h1>
 
         <p className="mt-3 text-slate-400">
+
           Sign in to your ConferenceOS account.
+
         </p>
 
-        {/* Login Form */}
+        <form
 
-        <form className="mt-8 space-y-5">
+          onSubmit={handleLogin}
 
-          {/* Email */}
+          className="mt-8 space-y-5"
+
+        >
+                    {/* Email */}
 
           <div>
 
@@ -44,6 +143,10 @@ export default function LoginPage() {
               <input
                 type="email"
                 placeholder="you@example.com"
+                value={email}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
                 className="w-full rounded-lg border border-slate-700 bg-slate-800 py-3 pl-10 pr-4 text-white outline-none transition-all focus:border-blue-500"
               />
 
@@ -67,21 +170,52 @@ export default function LoginPage() {
               />
 
               <input
-                type="password"
+                type={
+                  showPassword
+                    ? "text"
+                    : "password"
+                }
                 placeholder="********"
+                value={password}
+                onChange={(e) =>
+                  setPassword(
+                    e.target.value
+                  )
+                }
                 className="w-full rounded-lg border border-slate-700 bg-slate-800 py-3 pl-10 pr-10 text-white outline-none transition-all focus:border-blue-500"
               />
 
-              <Eye
-                className="absolute right-3 top-3.5 cursor-pointer text-slate-400 hover:text-white"
-                size={20}
-              />
+              <button
+                type="button"
+                onClick={() =>
+                  setShowPassword(
+                    !showPassword
+                  )
+                }
+                className="absolute right-3 top-3.5"
+              >
+
+                {showPassword ? (
+
+                  <EyeOff
+                    size={20}
+                    className="text-slate-400 hover:text-white"
+                  />
+
+                ) : (
+
+                  <Eye
+                    size={20}
+                    className="text-slate-400 hover:text-white"
+                  />
+
+                )}
+
+              </button>
 
             </div>
 
           </div>
-
-          {/* Forgot Password */}
 
           <div className="flex justify-end">
 
@@ -94,12 +228,24 @@ export default function LoginPage() {
 
           </div>
 
-          {/* Login */}
+          {error && (
+
+            <div className="rounded-lg bg-red-500/20 p-3 text-sm text-red-400">
+
+              {error}
+
+            </div>
+
+          )}
 
           <Button
+            type="submit"
+            disabled={loading}
             className="w-full py-6 text-base transition-all duration-300 hover:scale-[1.02]"
           >
-            Login
+            {loading
+              ? "Signing In..."
+              : "Login"}
           </Button>
 
         </form>
@@ -117,10 +263,10 @@ export default function LoginPage() {
           <div className="h-px flex-1 bg-slate-700"></div>
 
         </div>
-
-        {/* Google */}
+                {/* Google Login */}
 
         <Button
+          type="button"
           variant="outline"
           className="flex w-full items-center justify-center gap-3 border-slate-700 bg-slate-800 py-6 text-white transition hover:bg-slate-700"
         >
@@ -129,9 +275,10 @@ export default function LoginPage() {
           Continue with Google
         </Button>
 
-        {/* GitHub */}
+        {/* GitHub Login */}
 
         <Button
+          type="button"
           variant="outline"
           className="mt-3 flex w-full items-center justify-center gap-3 border-slate-700 bg-slate-800 py-6 text-white transition hover:bg-slate-700"
         >
@@ -158,5 +305,7 @@ export default function LoginPage() {
       </div>
 
     </main>
+
   );
+
 }
