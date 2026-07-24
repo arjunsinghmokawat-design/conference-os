@@ -1,19 +1,21 @@
 import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/home/Hero";
-import DashboardPreview from "@/components/home/DashboardPreview";
+import TrustedBy from "@/components/home/TrustedBy";
 import Stats from "@/components/home/Stats";
+import DashboardPreview from "@/components/home/DashboardPreview";
 import Features from "@/components/home/Features";
 
 export default function Home() {
   return (
-    <main className="bg-slate-950 min-h-screen">
+    <main className="min-h-screen bg-background">
       <Navbar />
       <Hero />
-
-            <DashboardPreview />
-
+      <TrustedBy />
       <Stats />
-      <Features />
+      <DashboardPreview />
+      <section id="features">
+        <Features />
+      </section>
     </main>
   );
 }

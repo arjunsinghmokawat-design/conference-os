@@ -1,40 +1,57 @@
+import {
+  Users,
+  FileText,
+  Globe,
+  Award,
+} from "lucide-react";
+
+const stats = [
+  {
+    icon: Globe,
+    value: "250+",
+    label: "Conferences Hosted",
+  },
+  {
+    icon: Users,
+    value: "50K+",
+    label: "Researchers",
+  },
+  {
+    icon: FileText,
+    value: "200K+",
+    label: "Papers Submitted",
+  },
+  {
+    icon: Award,
+    value: "120K+",
+    label: "Certificates Issued",
+  },
+];
+
 export default function Stats() {
-  const stats = [
-    {
-      number: "100+",
-      title: "Conferences",
-    },
-    {
-      number: "10K+",
-      title: "Participants",
-    },
-    {
-      number: "500+",
-      title: "Research Papers",
-    },
-    {
-      number: "99.9%",
-      title: "Uptime",
-    },
-  ];
-
   return (
-    <section className="bg-slate-900 py-16">
-      <div className="max-w-7xl mx-auto px-8 grid grid-cols-2 md:grid-cols-4 gap-6">
-        {stats.map((item) => (
-          <div
-            key={item.title}
-            className="rounded-xl border border-slate-700 bg-slate-800 p-8 text-center"
-          >
-            <h2 className="text-4xl font-bold text-blue-400">
-              {item.number}
-            </h2>
+    <section className="border-y bg-muted/30">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 py-16 md:grid-cols-4">
+        {stats.map((item) => {
+          const Icon = item.icon;
 
-            <p className="mt-2 text-gray-300">
-              {item.title}
-            </p>
-          </div>
-        ))}
+          return (
+            <div
+              key={item.label}
+              className="rounded-2xl border bg-card p-6 text-center shadow-sm transition hover:shadow-lg"
+            >
+              <Icon className="mx-auto mb-4 h-8 w-8 text-blue-600" />
+
+              <h2 className="text-3xl font-bold">
+                {item.value}
+              </h2>
+
+              <p className="mt-2 text-sm text-muted-foreground">
+                {item.label}
+              </p>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
