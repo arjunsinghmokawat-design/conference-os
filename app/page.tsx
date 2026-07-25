@@ -1,4 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+
 import Hero from "@/components/home/Hero";
 import TrustedBy from "@/components/home/TrustedBy";
 import Stats from "@/components/home/Stats";
@@ -8,6 +10,8 @@ import Workflow from "@/components/home/Workflow";
 import WhyConferenceOS from "@/components/home/WhyConferenceOS";
 import Pricing from "@/components/home/Pricing";
 import Testimonials from "@/components/home/Testimonials";
+import FAQ from "@/components/home/FAQ";
+import CTA from "@/components/home/CTA";
 
 export default function Home() {
   return (
@@ -33,6 +37,12 @@ export default function Home() {
       <Pricing />
 
       <Testimonials />
+
+      <FAQ />
+
+      <CTA />
+
+      <Footer />
     </main>
   );
 }
