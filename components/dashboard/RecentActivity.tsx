@@ -1,82 +1,74 @@
 import {
-  CheckCircle,
+  FileText,
+  UserCheck,
   CreditCard,
-  UserPlus,
-  FileCheck,
+  Award,
 } from "lucide-react";
 
 const activities = [
   {
-    icon: CheckCircle,
-    title: "Paper #248 Accepted",
-    time: "2 min ago",
-    color: "text-green-400",
+    icon: FileText,
+    title: "New paper submitted",
+    subtitle: "Deep Learning for Healthcare",
+    time: "5 min ago",
+  },
+  {
+    icon: UserCheck,
+    title: "Reviewer accepted invitation",
+    subtitle: "Prof. John Smith",
+    time: "20 min ago",
   },
   {
     icon: CreditCard,
-    title: "Payment Received ₹18,500",
-    time: "10 min ago",
-    color: "text-orange-400",
-  },
-  {
-    icon: UserPlus,
-    title: "35 New Registrations",
-    time: "25 min ago",
-    color: "text-blue-400",
-  },
-  {
-    icon: FileCheck,
-    title: "Reviewer Assigned",
+    title: "Registration payment received",
+    subtitle: "IEEE DELCON 2027",
     time: "1 hour ago",
-    color: "text-purple-400",
+  },
+  {
+    icon: Award,
+    title: "Certificate generated",
+    subtitle: "Author ID #2041",
+    time: "3 hours ago",
   },
 ];
 
 export default function RecentActivity() {
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-
-      <h2 className="mb-6 text-xl font-bold text-white">
+    <div className="rounded-2xl border bg-card p-6 shadow-sm">
+      <h2 className="mb-6 text-xl font-bold">
         Recent Activity
       </h2>
 
       <div className="space-y-5">
-
-        {activities.map((item) => {
-          const Icon = item.icon;
+        {activities.map((activity, index) => {
+          const Icon = activity.icon;
 
           return (
             <div
-              key={item.title}
-              className="flex items-center justify-between rounded-xl bg-slate-800 p-4"
+              key={index}
+              className="flex items-start gap-4"
             >
-              <div className="flex items-center gap-4">
-
-                <Icon
-                  className={item.color}
-                  size={22}
-                />
-
-                <div>
-
-                  <p className="font-medium text-white">
-                    {item.title}
-                  </p>
-
-                  <p className="text-sm text-slate-400">
-                    {item.time}
-                  </p>
-
-                </div>
-
+              <div className="rounded-xl bg-primary/10 p-3">
+                <Icon className="h-5 w-5 text-primary" />
               </div>
 
+              <div className="flex-1">
+                <h3 className="font-medium">
+                  {activity.title}
+                </h3>
+
+                <p className="text-sm text-muted-foreground">
+                  {activity.subtitle}
+                </p>
+              </div>
+
+              <span className="text-xs text-muted-foreground">
+                {activity.time}
+              </span>
             </div>
           );
         })}
-
       </div>
-
     </div>
   );
 }
