@@ -17,3 +17,31 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Conference {
+  id                     String   @id @default(cuid())
+
+  title                  String
+  shortName              String
+
+  venue                  String
+  mode                   String
+
+  startDate              DateTime
+  endDate                DateTime
+
+  submissionDeadline     DateTime
+  registrationDeadline   DateTime
+
+  registrationFee        Float
+
+  website                String?
+  email                  String?
+
+  description            String?
+
+  status                 String   @default("Draft")
+
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+}
