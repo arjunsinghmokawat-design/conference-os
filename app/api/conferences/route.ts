@@ -24,6 +24,21 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
+    if (
+      !body.title ||
+      !body.shortName ||
+      !body.venue ||
+      !body.startDate ||
+      !body.endDate ||
+      !body.submissionDeadline ||
+      !body.registrationDeadline
+    ) {
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
     const conference = await prisma.conference.create({
       data: {
         title: body.title,
@@ -37,20 +52,24 @@ export async function POST(request: Request) {
         submissionDeadline: new Date(body.submissionDeadline),
         registrationDeadline: new Date(body.registrationDeadline),
 
-        registrationFee: Number(body.registrationFee),
+        registrationFee: Number(body.registrationFee) || 0,
 
+        description: body.description || null,
         website: body.website || null,
         email: body.email || null,
-        description: body.description || null,
+
+        status: "Draft",
       },
     });
 
-    return NextResponse.json(conference, { status: 201 });
+    return NextResponse.json(conference, {
+      status: 201,
+    });
   } catch (error) {
     console.error(error);
 
     return NextResponse.json(
-      { error: "Failed to create conference" },
+      { error: "Internal Server Error" },
       { status: 500 }
     );
   }
